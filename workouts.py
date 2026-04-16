@@ -30,6 +30,16 @@ class Body:
             muscle.reset_volume()
         self.save_data()
         
+    def weekly_resetDB(self, gen_db):
+        master_stat = dict(gen_db["master_stat"].find_one()) 
+        master_stat[time.strftime("%Y-%m-%d %H:%M")] = {                                            "volume_per_muscle": {mus.name: mus.volume_done for mus in self.muscles}
+            }
+        gen_db["master_stat"].replace_one({}, master_stat, upsert=True)
+             
+        for muscle in self.muscles:
+            muscle.reset_volume()
+        self.save_data()
+        
     def volume_done(self):
         return {mus: mus.volume_done for mus in self.muscles}
     
@@ -57,6 +67,16 @@ class Body:
             date_str = current_state[mus.name]["last done"]
             date = datetime.strptime(str(date_str).split('.')[0], '%Y-%m-%d %H:%M:%S')
             mus.last_done = date
+            
+    def load_dataDB(self, gen_db):
+        muscle_dict = {mus.name: mus for mus in self.muscles}
+        current_state = current_week = dict(gen_db["current_week"].find_one())
+        for mus in self.muscles:
+            mus.volume_done = current_state[mus.name]["volume done"]
+            mus.rest_accumulated = current_state[mus.name]["rest accumulated"]
+            date_str = current_state[mus.name]["last done"]
+            date = datetime.strptime(str(date_str).split('.')[0], '%Y-%m-%d %H:%M:%S')
+            mus.last_done = date
         
     def save_data(self):
         print("SAVING")
@@ -66,6 +86,15 @@ class Body:
                          for mus in self.muscles}
         with open('current_week.json', 'w') as f:
             json.dump(current_state, f)
+            
+    def save_dataDB(self, gen_db):
+        print("SAVING")
+        current_state = {mus.name: {"volume done": mus.volume_done, 
+                                    "rest accumulated": mus.rest_accumulated, 
+                                    "last done": str(mus.last_done)}
+                         for mus in self.muscles}
+        gen_db["current_week"].replace_one({}, current_state, upsert=True)
+
     def muscles_ready(self):
         ready = []
         for mus in self.muscles:
@@ -87,6 +116,7 @@ class Workout:
         blocks: list of dicts {movement: sets}
         """
         self.name = name
+        self.name_ = '_'.join(name.split(' '))
         self.blocks = blocks
         self.movement_list = set()
         self.muscles = {}
@@ -121,6 +151,18 @@ class Workout:
         with open(filename, "a") as f:
             json.dump(data, f)
             f.write("\n")
+            
+    def save_dataDB(self, end_time, workout_db):
+        """Append current workout results to file"""
+        time_elapsed = str(np.ceil((end_time - self.start_time)/60))
+        print(self.start_time, end_time, time_elapsed)
+        
+        workout_history = dict(workout_db[self.name_].find_one())
+
+        new_workout = {"results": {move.name: self.results[move] for move in self.results}, "time": time_elapsed}
+        workout_history[time.strftime("%Y-%m-%d %H:%M")] = new_workout
+        workout_db[self.name_].replace_one({}, workout_history, upsert=True)
+
 
     def load_data(self):
         move_dic = {move.name: move for move in self.movement_list}
@@ -136,6 +178,22 @@ class Workout:
             return None
         last_session = json.loads(lines[-1])
         print(f"Loaded last workout from {last_session['date']}")
+        res = last_session["results"]
+        self.last = {move_dic[move_name]: res[move_name] for move_name in res}
+        return res
+    
+    def load_dataDB(self, workout_db):
+        move_dic = {move.name: move for move in self.movement_list}
+        """Load most recent workout results"""
+        try:
+            workout_history = dict(workout_db[self.name_].find_one())
+        except:
+            print('This database file might not exist...')
+            raise
+        
+        workout_dated = sorted([key if '20' in key else '0' for key in workout_history.keys()])
+        last_session = workout_history[workout_dated[-1]]
+        print(f"Loaded last workout from {workout_dated[-1]}")
         res = last_session["results"]
         self.last = {move_dic[move_name]: res[move_name] for move_name in res}
         return res
