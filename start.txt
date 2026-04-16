@@ -1,0 +1,12 @@
+echo on
+set CONDA_ROOT=%USERPROFILE%\miniconda3
+
+call "%CONDA_ROOT%\Scripts\activate.bat" "%CONDA_ROOT%"
+
+conda activate base
+
+cd /d "%~dp0"
+
+streamlit run app.py
+
+pause
