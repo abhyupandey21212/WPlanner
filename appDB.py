@@ -32,8 +32,6 @@ gen_db = client['general']
 
 my_body.load_dataDB(gen_db)
 
-
-
 WORKOUTS = my_body.workouts
 
 #atexit.register(my_body.save_data)
@@ -249,8 +247,6 @@ if page == "Workout":
     
 elif page == "Stats":
     st.title("Muscle Stats")
-
-
     # Get the muscle data
     volume_done = my_body.volume_done()
     volume_needed = my_body.volume_needed()

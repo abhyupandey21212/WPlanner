@@ -71,6 +71,7 @@ class Body:
     def load_dataDB(self, gen_db):
         muscle_dict = {mus.name: mus for mus in self.muscles}
         current_state = current_week = dict(gen_db["current_week"].find_one())
+        print(current_state)
         for mus in self.muscles:
             mus.volume_done = current_state[mus.name]["volume done"]
             mus.rest_accumulated = current_state[mus.name]["rest accumulated"]
@@ -154,7 +155,7 @@ class Workout:
             
     def save_dataDB(self, time_elapsed, workout_db):
         """Append current workout results to file"""
-        print(self.start_time, end_time, time_elapsed)
+        print(self.start_time, time_elapsed)
         
         workout_history = dict(workout_db[self.name_].find_one())
 
