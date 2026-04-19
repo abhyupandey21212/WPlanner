@@ -53,9 +53,14 @@ hammer_curl = Movement('Hammer Curl', [bicep, forearm])
 squat = Movement('Squat', [quad, lower_back])
 rdl = Movement('Romanian Deadlift', [hamstring, glute, lower_back])
 split_squat = Movement('Split Squat', [quad, glute, hamstring])
+leg_extension = Movement('Leg Extension', [quad])
+leg_curl = Movement('Leg Curl', [hamstring, glute])
 sumo_squat = Movement('Sumo Squat', [aductor, quad])
 calf_raise = Movement('Calf Raises', [calf])
 one_leg_calf_raise = Movement('One Leg Calf Raises', [calf])
+machine_calf_raise = Movement('Machine Calf Raises', [calf])
+one_leg_machine_calf_raise = Movement('One Leg Machine Calf Raises', [calf])
+
 
 
 

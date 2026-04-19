@@ -268,6 +268,15 @@ Legs_II_blocks = [
     {one_leg_calf_raise: 3},
     ]
 
+Legs_III_blocks = [
+    {squat: 4},
+    {rdl: 3}
+    {machine_calf_raise: 4},
+    {leg_extension: 3},
+    {leg_curl: 3},
+    {one_leg_machine_calf_raise: 3},
+    ]
+
 CB_I_blocks = [
     {flat_chest_press : 3, bent_over_row: 3},
     {incline_chest_press : 3, shrugs: 3},
@@ -275,19 +284,22 @@ CB_I_blocks = [
     {chest_pullovers : 3, calf_raise: 3},
     ]
 
-A_I_blocks = [
+Arms_I_blocks = [
     {},
     {},
     ]
 
 Push_I = Workout("Push I", Push_I_blocks)
-Push_II = Workout("Push II", Push_II_blocks)
 Push_III = Workout("Push III", Push_III_blocks)
 Pull_I = Workout("Pull I", Pull_Iv2_blocks)
 Pull_II = Workout("Pull II", Pull_II_blocks)
-Legs_I = Workout("Legs I", Legs_I_blocks)
-Legs_II = Workout("Legs II", Legs_II_blocks)
-CB_I = Workout("Chest and Back I", CB_I_blocks)
+Legs_III = Workout("Legs III", Legs_III_blocks)
+
+#Removing old unused workouts to reduce clutter
+#Push_II = Workout("Push II", Push_II_blocks)
+#Legs_I = Workout("Legs I", Legs_I_blocks)
+#Legs_II = Workout("Legs II", Legs_II_blocks)
+#CB_I = Workout("Chest and Back I", CB_I_blocks)
 
 
-My_body = Body([chest, front_delt, side_delt, rear_delt, tricep, back, bicep, forearm, quad, hamstring, abductor, aductor, glute, calf], [], [Push_I, Push_II, Push_III, Pull_I, Pull_II, Legs_I, Legs_II, CB_I])
+My_body = Body([chest, front_delt, side_delt, rear_delt, tricep, back, bicep, forearm, quad, hamstring, abductor, aductor, glute, calf], [], [Push_I, Push_III, Pull_I, Pull_II, Legs_III])
