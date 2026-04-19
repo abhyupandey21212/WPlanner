@@ -270,7 +270,7 @@ Legs_II_blocks = [
 
 Legs_III_blocks = [
     {squat: 4},
-    {rdl: 3}
+    {rdl: 3},
     {machine_calf_raise: 4},
     {leg_extension: 3},
     {leg_curl: 3},
