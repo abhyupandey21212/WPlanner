@@ -152,9 +152,8 @@ class Workout:
             json.dump(data, f)
             f.write("\n")
             
-    def save_dataDB(self, end_time, workout_db):
+    def save_dataDB(self, time_elapsed, workout_db):
         """Append current workout results to file"""
-        time_elapsed = str(np.ceil((end_time - self.start_time)/60))
         print(self.start_time, end_time, time_elapsed)
         
         workout_history = dict(workout_db[self.name_].find_one())

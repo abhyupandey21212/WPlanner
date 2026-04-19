@@ -214,7 +214,9 @@ if page == "Workout":
         #any_entered = any(s["weight"] or s["reps"] for sets in results.values() for s in sets)
         #if any_entered:
         workout.results = results
-        workout.save_dataDB(end_time, workout_db)
+        elapsed = time.time() - st.session_state.start_time
+        total_time_mins = int(elapsed // 60)
+        workout.save_dataDB(total_time_mins, workout_db)
         st.success("Workout saved successfully! 💪")
         st.session_state.session_data = {}
         workout.do()
