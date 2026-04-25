@@ -29,6 +29,7 @@ class Movement:
 #PUSH
 flat_chest_press = Movement('Bench Press', [chest, front_delt, tricep])
 lateral_raise = Movement('Lateral Raise', [side_delt])
+rear_lateral_raise = Movement('Behind Lateral Raise', [side_delt])
 incline_chest_press = Movement('Incline Bench Press', [chest, front_delt, tricep])
 upright_row = Movement('Upright Row', [front_delt, side_delt])
 chest_fly = Movement('Chest Fly', [chest])
@@ -61,7 +62,8 @@ one_leg_calf_raise = Movement('One Leg Calf Raises', [calf])
 machine_calf_raise = Movement('Machine Calf Raises', [calf])
 one_leg_machine_calf_raise = Movement('One Leg Machine Calf Raises', [calf])
 
-
+#ABS
+leg_raise = Movement('Leg Raises', [abs])
 
 
 movements_list = [flat_chest_press, lateral_raise, incline_chest_press, upright_row, chest_fly, tricep_extension, seated_press, dips]

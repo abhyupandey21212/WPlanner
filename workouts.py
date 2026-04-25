@@ -227,7 +227,21 @@ Push_II_blocks = [
 ]
 
 Push_III_blocks = [
-    {incline_chest_press: 4, bench_y_raise: 4},
+    {incline_chest_press: 4, lateral_raise: 4},
+    {chest_fly: 3, tricep_extension: 3},
+    {chest_pullovers: 3},
+    {seated_press: 4, dips: 3},
+]
+
+Push_IV_blocks = [
+    {flat_chest_press: 4, rear_lateral_raise: 3},
+    {chest_fly: 3, upright_row: 3},
+    {seated_press: 3, tricep_extension: 3},
+    {leg_raise: 3, dips: 3},
+]
+
+Push_V_blocks = [
+    {incline_chest_press: 4, lateral_raise: 3},
     {chest_fly: 3, tricep_extension: 3},
     {chest_pullovers: 3},
     {seated_press: 4, dips: 3},
