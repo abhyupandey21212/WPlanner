@@ -256,7 +256,7 @@ Legs_I = Workout("Legs I", Legs_I_blocksv2)
 #CB_I = Workout("Chest and Back I", CB_I_blocks)
 
 
-My_body = Body([chest, front_delt, side_delt, rear_delt, tricep, back, bicep, forearm, quad, hamstring, abductor, aductor, glute, calf], [Push_I, Push_II, Pull_I, Pull_II, Legs_I])
+My_body = Body([chest, front_delt, side_delt, rear_delt, tricep, back, bicep, forearm, quad, hamstring, abductor, aductor, glute, calf], [],[Push_I, Push_II, Pull_I, Pull_II, Legs_I])
 
 
 """
