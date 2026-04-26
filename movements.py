@@ -63,7 +63,7 @@ machine_calf_raise = Movement('Machine Calf Raises', [calf])
 one_leg_machine_calf_raise = Movement('One Leg Machine Calf Raises', [calf])
 
 #ABS
-leg_raise = Movement('Leg Raises', [abs])
-ab_rollouts = Movement('Ab Rollouts', [abs, chest])
+leg_raise = Movement('Leg Raises', [ab])
+ab_rollouts = Movement('Ab Rollouts', [ab, chest])
 
 movements_list = [flat_chest_press, lateral_raise, incline_chest_press, upright_row, chest_fly, tricep_extension, seated_press, dips]

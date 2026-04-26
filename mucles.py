@@ -92,7 +92,7 @@ aductor = Muscle('Aductors', rest_needed=2, volume_needed=8)
 calf = Muscle('Calves', rest_needed=1, volume_needed=12)
 # Notoriously fast recovering, needs high frequency and volume
 
-abs = Muscle('Abs', rest_needed=1, volume_needed=8)
+ab = Muscle('Abs', rest_needed=1, volume_needed=8)
 # Recover very quickly, get indirect work from compounds
 
 """ 
