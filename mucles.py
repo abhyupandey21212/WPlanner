@@ -5,7 +5,7 @@ Created on Mon Sep 15 14:08:40 2025
 @author: abhyu
 """
 import time 
-import numpy as np
+#import numpy as np
 from datetime import datetime
 
 class Muscle:
