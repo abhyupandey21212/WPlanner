@@ -56,14 +56,14 @@ class Muscle:
 
 chest = Muscle('Chest', rest_needed=2, volume_needed=12)#,               subgroups=['upper', 'lower', 'inner'])
 
-front_delt = Muscle('Front Delts', rest_needed=1, volume_needed=6)
+front_delt = Muscle('Front delts', rest_needed=1, volume_needed=6)
 # Front delts recover fast and get heavy indirect volume from pressing
 # MEV is low (~6) because pressing already covers most of it
 
-side_delt = Muscle('Side Delts', rest_needed=1, volume_needed=8)
+side_delt = Muscle('Side delts', rest_needed=1, volume_needed=8)
 # Fast recovering, can handle high frequency
 
-rear_delt = Muscle('Rear Delts', rest_needed=1, volume_needed=6)
+rear_delt = Muscle('Rear delts', rest_needed=1, volume_needed=6)
 # Similar to side delts, very fast recovery
 
 tricep = Muscle('Triceps', rest_needed=1, volume_needed=8)
