@@ -136,7 +136,7 @@ if page == "Workout":
 
             #Filling from autosave
             for move, n_sets in block.items():
-                if not autosaved:
+                if move.name not in st.session_state.workout_progress:  
                     st.session_state.workout_progress[move.name] = [{"weight": 0.0, "reps": 0} for i in range(n_sets)]
 
 
