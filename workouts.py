@@ -195,7 +195,13 @@ class Workout:
         last_session = workout_history[workout_dated[-1]]
         print(f"Loaded last workout from {workout_dated[-1]}")
         res = last_session["results"]
-        self.last = {move_dic[move_name]: res[move_name] for move_name in res}
+        #self.last = {move_dic[move_name]: res[move_name] for move_name in res}
+
+        self.last = {move_dic[move_name]: res[move_name] for move_name in res if move_name in move_dic}
+        # Then add missing moves with 0
+        for move_name, move_obj in move_dic.items():
+            if move_obj not in self.last:
+                self.last[move_obj] = 0
         return res
     # ==================================================
     # CORE
