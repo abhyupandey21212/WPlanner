@@ -35,7 +35,7 @@ upright_row = Movement('Upright Row', [front_delt, side_delt])
 chest_fly = Movement('Chest Fly', [chest])
 tricep_extension = Movement('Tricep Extension', [tricep])
 seated_press = Movement('Seated Press', [front_delt])
-dips = Movement('Dips', [tricep])
+dips = Movement('Dips', [tricep, chest])
 rear_delt_crossover = Movement('Rear-delt Crossover', [rear_delt])
 chest_pullovers = Movement('Chest Pullovers', [chest, tricep])
 bench_y_raise = Movement('Bench Y Raise', [side_delt, front_delt])
@@ -64,6 +64,6 @@ one_leg_machine_calf_raise = Movement('One Leg Machine Calf Raises', [calf])
 
 #ABS
 leg_raise = Movement('Leg Raises', [abs])
-
+ab_rollouts = Movement('Ab Rollouts', [abs, chest])
 
 movements_list = [flat_chest_press, lateral_raise, incline_chest_press, upright_row, chest_fly, tricep_extension, seated_press, dips]

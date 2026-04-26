@@ -208,10 +208,59 @@ class Workout:
         for move in self.results:
             sets = len(self.results[move])
             move.do(sets)
-            
+   
+Push_I_blocksv2 = [
+    {flat_chest_press: 4, rear_lateral_raise: 3},
+    {chest_fly: 3, upright_row: 3},
+    {seated_press: 3, tricep_extension: 3},
+    {leg_raise: 3, dips: 3},
+]
+
+Push_II_blocksv3 = [
+    {incline_chest_press: 4, lateral_raise: 3},
+    {chest_fly: 3, tricep_extension: 3},
+    {chest_pullovers: 3, ab_rollouts: 3},
+    {seated_press: 4, dips: 3},
+]
+
+Pull_Iv2_blocks = [
+    {incline_curl: 4, lat_pull_up: 3},
+    {hammer_curl: 4, rear_delt_crossover: 3},
+    {t_bar_row: 4, shrugs: 3},
+]
+
+Pull_II_blocks = [
+    {lat_pulldown: 3, bent_over_row: 3},
+    {deadlift: 3, reverse_fly: 3},
+    {incline_curl: 3},
+    {preacher_curl: 3, calf_raise: 3},
+]
+
+Legs_I_blocksv2 = [
+    {squat: 4, machine_calf_raise: 4},
+    {rdl: 3, split_squat: 3},
+    {leg_extension: 3, one_leg_machine_calf_raise: 3},
+    {leg_curl: 3}
+]
+
+Push_I = Workout("Push I", Push_I_blocksv2)
+Push_II = Workout("Push II", Push_II_blocksv3)
+Pull_I = Workout("Pull I", Pull_Iv2_blocks)
+Pull_II = Workout("Pull II", Pull_II_blocks)
+Legs_I = Workout("Legs I", Legs_I_blocksv2)
+
+#Removing old unused workouts to reduce clutter
+#Push_II = Workout("Push II", Push_II_blocks)
+#Legs_I = Workout("Legs I", Legs_I_blocks)
+#Legs_II = Workout("Legs II", Legs_II_blocks)
+#CB_I = Workout("Chest and Back I", CB_I_blocks)
 
 
-    
+My_body = Body([chest, front_delt, side_delt, rear_delt, tricep, back, bicep, forearm, quad, hamstring, abductor, aductor, glute, calf], [], [Push_I, Push_II, Pull_I, Pull_II, Legs_I])
+
+
+"""
+ 
 Push_I_blocks = [
     {flat_chest_press: 3, lateral_raise: 3},
     {incline_chest_press: 3, upright_row: 3},
@@ -226,45 +275,11 @@ Push_II_blocks = [
     {seated_press: 3, dips: 3},
 ]
 
-Push_III_blocks = [
+Push_II_blocksv2 = [
     {incline_chest_press: 4, lateral_raise: 4},
     {chest_fly: 3, tricep_extension: 3},
     {chest_pullovers: 3},
     {seated_press: 4, dips: 3},
-]
-
-Push_IV_blocks = [
-    {flat_chest_press: 4, rear_lateral_raise: 3},
-    {chest_fly: 3, upright_row: 3},
-    {seated_press: 3, tricep_extension: 3},
-    {leg_raise: 3, dips: 3},
-]
-
-Push_V_blocks = [
-    {incline_chest_press: 4, lateral_raise: 3},
-    {chest_fly: 3, tricep_extension: 3},
-    {chest_pullovers: 3},
-    {seated_press: 4, dips: 3},
-]
-
-Pull_I_blocks = [
-    {incline_curl: 4, lat_pull_up: 3},
-    {hammer_curl: 4},
-    {rear_delt_crossover: 3, t_bar_row: 3},
-    {shrugs: 3},
-]
-
-Pull_Iv2_blocks = [
-    {incline_curl: 4, lat_pull_up: 3},
-    {hammer_curl: 4, rear_delt_crossover: 3},
-    {t_bar_row: 4, shrugs: 3},
-]
-
-Pull_II_blocks = [
-    {lat_pulldown: 3, bent_over_row: 3},
-    {deadlift: 3, reverse_fly: 3},
-    {incline_curl: 3},
-    {preacher_curl: 3, calf_raise: 3},
 ]
 
 Legs_I_blocks = [
@@ -303,17 +318,11 @@ Arms_I_blocks = [
     {},
     ]
 
-Push_I = Workout("Push I", Push_I_blocks)
-Push_III = Workout("Push III", Push_III_blocks)
-Pull_I = Workout("Pull I", Pull_Iv2_blocks)
-Pull_II = Workout("Pull II", Pull_II_blocks)
-Legs_III = Workout("Legs III", Legs_III_blocks)
-
-#Removing old unused workouts to reduce clutter
-#Push_II = Workout("Push II", Push_II_blocks)
-#Legs_I = Workout("Legs I", Legs_I_blocks)
-#Legs_II = Workout("Legs II", Legs_II_blocks)
-#CB_I = Workout("Chest and Back I", CB_I_blocks)
-
-
-My_body = Body([chest, front_delt, side_delt, rear_delt, tricep, back, bicep, forearm, quad, hamstring, abductor, aductor, glute, calf], [], [Push_I, Push_III, Pull_I, Pull_II, Legs_III])
+    
+Pull_I_blocks = [
+    {incline_curl: 4, lat_pull_up: 3},
+    {hammer_curl: 4},
+    {rear_delt_crossover: 3, t_bar_row: 3},
+    {shrugs: 3},
+]
+"""
