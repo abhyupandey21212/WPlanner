@@ -44,18 +44,15 @@ if page == "Workout":
         autosave_dic = dict(gen_db["autosave"].find_one())
         st.session_state.workout_progress = autosave_dic["workout_progress"]
         st.session_state.start_time = autosave_dic["start_time"]
-        st.session_state.block_notes = autosave_dic.get("block_notes", {})
         st.info("💾 Autosaved workout progress restored.")
         autosaved = True
     except:
         st.session_state.workout_progress = {}
         st.session_state.start_time = time.time()
-        st.session_state.block_notes = {}
         autosaved = False
     if autosave_dic == {}:
         st.session_state.workout_progress = {}
         st.session_state.start_time = time.time()
-        st.session_state.block_notes = {}
         autosaved = False
 
     st.set_page_config(page_title="Workout Tracker", layout="centered")
@@ -73,19 +70,10 @@ if page == "Workout":
         st.session_state.timer_running = False
     if "start_time" not in st.session_state:
         st.session_state.start_time = None
-    if "block_notes" not in st.session_state:
-        st.session_state.block_notes = {}
 
 
     # Load last workout results
     last_data = workout.load_dataDB(workout_db=workout_db)
-
-    # Extract last week's block notes if they exist
-    last_block_notes = {}
-    print(last_data.keys())
-    if last_data is not None and "__block_notes__" in last_data:
-        print('FOUND NOTES!')
-        last_block_notes = last_data["__block_notes__"]
 
     st.subheader(f"Workout: {workout.name}")
             
@@ -133,15 +121,8 @@ if page == "Workout":
         
         #st.write("### Fill in your sets:")
         results = {}
-        block_notes_current = {}
-
         for block_idx, block in enumerate(workout.blocks):
             st.markdown(f"#### Block {block_idx+1}")
-
-            # Show last week's notes for this block at the top, if any
-            last_note_key = f"block_{block_idx}"
-            if last_note_key in last_block_notes and last_block_notes[last_note_key].strip():
-                st.info(f"📝 **Last week's note:** {last_block_notes[last_note_key]}")
             
             #Creating the correct block order
             all_sets = []
@@ -211,28 +192,12 @@ if page == "Workout":
                     
                     #Autosave
                     st.session_state.workout_progress[move.name][s] = {"weight": w, "reps": r}
+                    autosave_dic = {"workout_progress": st.session_state.workout_progress, "start_time": st.session_state.start_time}
+                    gen_db["autosave"].replace_one({}, autosave_dic, upsert=True)
 
-            # Block notes field — shown after all sets in the block
-            note_key = f"block_{block_idx}"
-            prev_note = st.session_state.block_notes.get(note_key, "")
-            note = st.text_area(
-                f"📝 Notes for Block {block_idx+1}",
-                value=prev_note,
-                key=f"notes_input_{block_idx}",
-                placeholder="Any notes for this block? (e.g. felt weak, increase weight next time...)"
-            )
-            st.session_state.block_notes[note_key] = note
-            block_notes_current[note_key] = note
-
-            # Autosave including notes
-            autosave_dic = {
-                "workout_progress": st.session_state.workout_progress,
-                "start_time": st.session_state.start_time,
-                "block_notes": st.session_state.block_notes
-            }
-            gen_db["autosave"].replace_one({}, autosave_dic, upsert=True)
-
-            st.write("---")
+                        
+                if s == last_thing:
+                    st.write("---")
 
 
                     
@@ -249,13 +214,6 @@ if page == "Workout":
         workout.results = results
         elapsed = time.time() - st.session_state.start_time
         total_time_mins = int(elapsed // 60)
-        # Attach block notes to results under a reserved key before saving
-        merged_notes = {}
-        for key in set(list(last_block_notes.keys()) + list(block_notes_current.keys())):
-            current = block_notes_current.get(key, "").strip()
-            merged_notes[key] = current if current else last_block_notes.get(key, "")
-
-        workout.results["__block_notes__"] = merged_notes
         workout.save_dataDB(total_time_mins, workout_db)
         st.success("Workout saved successfully! 💪")
         st.session_state.session_data = {}
@@ -353,3 +311,6 @@ elif page == "Stats":
             st.write("Result:", result)
         except Exception as e:
             st.error(f"Error: {e}")
+
+
+
