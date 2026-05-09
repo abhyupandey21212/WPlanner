@@ -158,8 +158,11 @@ class Workout:
         print(self.start_time, time_elapsed)
         
         workout_history = dict(workout_db[self.name_].find_one())
-
+        block_notes = {}
+        if '__block_notes__' in self.results:
+            block_notes = self.results.pop('__block_notes__')
         new_workout = {"results": {move.name: self.results[move] for move in self.results}, "time": time_elapsed}
+        new_workout['__block_notes__'] = block_notes
         workout_history[time.strftime("%Y-%m-%d %H:%M")] = new_workout
         workout_db[self.name_].replace_one({}, workout_history, upsert=True)
 
@@ -195,6 +198,8 @@ class Workout:
         last_session = workout_history[workout_dated[-1]]
         print(f"Loaded last workout from {workout_dated[-1]}")
         res = last_session["results"]
+        if '__block_notes__' in last_session:
+            res['__block_notes__'] = last_session['__block_notes__']
         #self.last = {move_dic[move_name]: res[move_name] for move_name in res}
 
         self.last = {move_dic[move_name]: res[move_name] for move_name in res if move_name in move_dic}
@@ -222,8 +227,22 @@ Push_I_blocksv2 = [
     {leg_raise: 3, dips: 3},
 ]
 
+Push_I_blocksv3 = [
+    {cable_chest_press: 4, rear_lateral_raise: 3},
+    {chest_fly: 3, upright_row: 3},
+    {seated_press: 3, tricep_extension: 3},
+    {leg_raise: 3, dips: 3},
+]
+
 Push_II_blocksv3 = [
     {incline_chest_press: 4, lateral_raise: 3},
+    {chest_fly: 3, tricep_extension: 3},
+    {chest_pullovers: 3, ab_rollouts: 3},
+    {seated_press: 4, dips: 3},
+]
+
+Push_II_blocksv4 = [
+    {cable_incline_press: 4, lateral_raise: 3},
     {chest_fly: 3, tricep_extension: 3},
     {chest_pullovers: 3, ab_rollouts: 3},
     {seated_press: 4, dips: 3},
@@ -249,8 +268,8 @@ Legs_I_blocksv2 = [
     {leg_curl: 3}
 ]
 
-Push_I = Workout("Push I", Push_I_blocksv2)
-Push_II = Workout("Push II", Push_II_blocksv3)
+Push_I = Workout("Push I", Push_I_blocksv3)
+Push_II = Workout("Push II", Push_II_blocksv4)
 Pull_I = Workout("Pull I", Pull_Iv2_blocks)
 Pull_II = Workout("Pull II", Pull_II_blocks)
 Legs_I = Workout("Legs I", Legs_I_blocksv2)

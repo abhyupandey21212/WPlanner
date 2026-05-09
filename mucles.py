@@ -5,7 +5,7 @@ Created on Mon Sep 15 14:08:40 2025
 @author: abhyu
 """
 import time 
-#import numpy as np
+import numpy as np
 from datetime import datetime
 
 class Muscle:
@@ -49,12 +49,18 @@ class Muscle:
     
     def reset_volume(self):
         self.volume_done = 0
-    
+
+class MuscleGroup:
+    def __init__(self, name, muscles, volume_needed, rest_needed):
+        pass
     
 # volume_needed = MAV starting point (sets/week)
 # rest_needed = days (based on RP recovery guidelines)
 
-chest = Muscle('Chest', rest_needed=2, volume_needed=12)#,               subgroups=['upper', 'lower', 'inner'])
+# inner_chest = Muscle('Inner chest')
+# upper_chest = Muscle('Upper chest')
+# lower_chest = Muscle('Lower chest')
+chest = Muscle('Chest', rest_needed=2, volume_needed=12)#, subgroups=[inner_chest, upper_chest, lower_chest])
 
 front_delt = Muscle('Front delts', rest_needed=1, volume_needed=6)
 # Front delts recover fast and get heavy indirect volume from pressing
@@ -64,10 +70,12 @@ side_delt = Muscle('Side delts', rest_needed=1, volume_needed=8)
 # Fast recovering, can handle high frequency
 
 rear_delt = Muscle('Rear delts', rest_needed=1, volume_needed=6)
+# shoulder = MuscleGroup('Shoulder', muscles=[front_delt, side_delt, rear_delt])
 # Similar to side delts, very fast recovery
 
 tricep = Muscle('Triceps', rest_needed=1, volume_needed=8)
 # Gets heavy indirect volume from all pressing, so direct MEV is lower
+
 
 back = Muscle('Back', rest_needed=2, volume_needed=12)#, subgroups=['lats', 'traps', 'rhomboids'])
 
@@ -76,7 +84,7 @@ bicep = Muscle('Biceps', rest_needed=1, volume_needed=8)
 
 forearm = Muscle('Forearms', rest_needed=1, volume_needed=6)
 
-lower_back = Muscle('Lower Back', rest_needed=3, volume_needed=6)
+lower_back = Muscle('Lower back', rest_needed=3, volume_needed=6)
 # Slow to recover, especially if doing heavy compounds
 
 quad = Muscle('Quads', rest_needed=2, volume_needed=12)

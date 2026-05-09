@@ -1,3 +1,4 @@
 .streamlit/secrets.toml
 test/
 old_data/
+.streamlit/

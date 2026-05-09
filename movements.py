@@ -6,43 +6,49 @@ Created on Mon Sep 15 14:07:18 2025
 """
 from mucles import *
 class Movement:
-    def __init__(self, name, muscles):
+    def __init__(self, name, prim_muscles, sec_muscles = []):
         self.name = name
-        self.muscles = muscles
-        for muscle in muscles:
+        self.muscles = prim_muscles
+        self.sec_muscles = sec_muscles
+        for muscle in prim_muscles:
             muscle.add_move(self)
+        
         #IN FUTURE, add prim and sec muscle groups with 1 and 0.5 volume factor
         
     def do(self, sets):
         for muscle in self.muscles:
             muscle.work(sets)
+        for muscle in self.sec_muscles:
+            muscle.work(0.5*sets)
             
     def is_ready(self):
         return all([muscle.is_ready() for muscle in self.muscles])
     
     def __repr__(self):
-        return self.name
+        return f'{self.name} involves the muscles {self.muscles}, as well as secondary muscles {self.sec_muscles}'
     
     
     
     
 #PUSH
-flat_chest_press = Movement('Bench Press', [chest, front_delt, tricep])
+flat_chest_press = Movement('Bench Press', [chest], [front_delt, tricep])
+cable_chest_press = Movement('Cable Chest Press', [chest], [front_delt, tricep])
+cable_incline_press = Movement('Cable Incline Press', [chest], [front_delt, tricep])
 lateral_raise = Movement('Lateral Raise', [side_delt])
 rear_lateral_raise = Movement('Behind Lateral Raise', [side_delt])
-incline_chest_press = Movement('Incline Bench Press', [chest, front_delt, tricep])
+incline_chest_press = Movement('Incline Bench Press', [chest], [front_delt, tricep])
 upright_row = Movement('Upright Row', [front_delt, side_delt])
 chest_fly = Movement('Chest Fly', [chest])
 tricep_extension = Movement('Tricep Extension', [tricep])
 seated_press = Movement('Seated Press', [front_delt])
-dips = Movement('Dips', [tricep, chest])
+dips = Movement('Dips', [tricep], [chest])
 rear_delt_crossover = Movement('Rear-delt Crossover', [rear_delt])
-chest_pullovers = Movement('Chest Pullovers', [chest, tricep])
-bench_y_raise = Movement('Bench Y Raise', [side_delt, front_delt])
+chest_pullovers = Movement('Chest Pullovers', [chest], [tricep, back])
+bench_y_raise = Movement('Bench Y Raise', [side_delt], [front_delt])
 #PULL
 shrugs = Movement('Shrugs', [back])
-lat_pull_up = Movement('Lat Pullups', [back, bicep])
-lat_pulldown = Movement('Lat Pulldowns', [back, bicep])
+lat_pull_up = Movement('Lat Pullups', [back], [bicep])
+lat_pulldown = Movement('Lat Pulldowns', [back], [bicep])
 deadlift = Movement('Deadlift', [back, lower_back])
 bent_over_row = Movement('Bent-over Rows', [back])
 t_bar_row = Movement('T-bar Rows', [back])
@@ -51,12 +57,12 @@ incline_curl = Movement('Incline Curl', [bicep])
 preacher_curl = Movement('Preacher Curl', [bicep])
 hammer_curl = Movement('Hammer Curl', [bicep, forearm])
 #LEGS
-squat = Movement('Squat', [quad, lower_back])
-rdl = Movement('Romanian Deadlift', [hamstring, glute, lower_back])
-split_squat = Movement('Split Squat', [quad, glute, hamstring])
+squat = Movement('Squat', [quad], [lower_back, glute])
+rdl = Movement('Romanian Deadlift', [hamstring], [glute, lower_back])
+split_squat = Movement('Split Squat', [quad, glute], [hamstring])
 leg_extension = Movement('Leg Extension', [quad])
-leg_curl = Movement('Leg Curl', [hamstring, glute])
-sumo_squat = Movement('Sumo Squat', [aductor, quad])
+leg_curl = Movement('Leg Curl', [hamstring], [glute])
+sumo_squat = Movement('Sumo Squat', [glute], [aductor, quad])
 calf_raise = Movement('Calf Raises', [calf])
 one_leg_calf_raise = Movement('One Leg Calf Raises', [calf])
 machine_calf_raise = Movement('Machine Calf Raises', [calf])
