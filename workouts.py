@@ -220,12 +220,7 @@ class Workout:
             sets = len(self.results[move])
             move.do(sets)
    
-Push_I_blocksv2 = [
-    {flat_chest_press: 4, rear_lateral_raise: 3},
-    {chest_fly: 3, upright_row: 3},
-    {seated_press: 3, tricep_extension: 3},
-    {leg_raise: 3, dips: 3},
-]
+
 
 Push_I_blocksv3 = [
     {cable_chest_press: 4, rear_lateral_raise: 3},
@@ -234,29 +229,22 @@ Push_I_blocksv3 = [
     {leg_raise: 3, dips: 3},
 ]
 
-Push_II_blocksv3 = [
-    {incline_chest_press: 4, lateral_raise: 3},
-    {chest_fly: 3, tricep_extension: 3},
-    {chest_pullovers: 3, ab_rollouts: 3},
-    {seated_press: 4, dips: 3},
-]
-
-Push_II_blocksv4 = [
+Push_II_blocksv5 = [
     {cable_incline_press: 4, lateral_raise: 3},
     {chest_fly: 3, tricep_extension: 3},
     {chest_pullovers: 3, ab_rollouts: 3},
     {seated_press: 4, dips: 3},
 ]
 
-Pull_Iv2_blocks = [
-    {incline_curl: 4, lat_pull_up: 3},
+Pull_Iv3_blocks = [
+    {incline_curl: 4, shrugs: 3},
     {hammer_curl: 4, rear_delt_crossover: 3},
-    {t_bar_row: 4, shrugs: 3},
+    {t_bar_row: 4, lat_pullaround: 3},
 ]
 
-Pull_II_blocks = [
-    {lat_pulldown: 3, bent_over_row: 3},
-    {deadlift: 3, reverse_fly: 3},
+Pull_IIv2_blocks = [
+    {close_grip_pulldown: 3, cable_row: 3},
+    {deadlift: 3, machine_row: 3},
     {incline_curl: 3},
     {preacher_curl: 3, calf_raise: 3},
 ]
@@ -268,10 +256,43 @@ Legs_I_blocksv2 = [
     {leg_curl: 3}
 ]
 
+#------------ OLD VERSIONS ------------
+Pull_Iv2_blocks = [
+    {incline_curl: 4, lat_pull_up: 3},
+    {hammer_curl: 4, rear_delt_crossover: 3},
+    {t_bar_row: 4, shrugs: 3},
+]
+Pull_II_blocks = [
+    {lat_pullaround: 3, bent_over_row: 3},
+    {deadlift: 3, reverse_fly: 3},
+    {incline_curl: 3},
+    {preacher_curl: 3, calf_raise: 3},
+]
+Push_II_blocksv4 = [
+    {cable_incline_press: 4, lateral_raise: 3},
+    {chest_fly: 3, tricep_extension: 3},
+    {chest_pullovers: 3, ab_rollouts: 3},
+    {seated_press: 4, dips: 3},
+]
+
+Push_II_blocksv3 = [
+    {incline_chest_press: 4, lateral_raise: 3},
+    {chest_fly: 3, tricep_extension: 3},
+    {chest_pullovers: 3, ab_rollouts: 3},
+    {seated_press: 4, dips: 3},
+]
+Push_I_blocksv2 = [
+    {flat_chest_press: 4, rear_lateral_raise: 3},
+    {chest_fly: 3, upright_row: 3},
+    {seated_press: 3, tricep_extension: 3},
+    {leg_raise: 3, dips: 3},
+]
+
+#------------ Selected VERSIONS ------------
 Push_I = Workout("Push I", Push_I_blocksv3)
 Push_II = Workout("Push II", Push_II_blocksv4)
-Pull_I = Workout("Pull I", Pull_Iv2_blocks)
-Pull_II = Workout("Pull II", Pull_II_blocks)
+Pull_I = Workout("Pull I", Pull_Iv3_blocks)
+Pull_II = Workout("Pull II", Pull_IIv2_blocks)
 Legs_I = Workout("Legs I", Legs_I_blocksv2)
 
 #Removing old unused workouts to reduce clutter
