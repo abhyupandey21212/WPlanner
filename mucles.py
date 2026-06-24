@@ -103,6 +103,8 @@ calf = Muscle('Calves', rest_needed=1, volume_needed=12)
 ab = Muscle('Abs', rest_needed=1, volume_needed=8)
 # Recover very quickly, get indirect work from compounds
 
+brain = Muscle('DummyMuscle', rest_needed=0, volume_needed=0)
+
 """ 
 # MUSCLES
 chest = Muscle('Chest', rest_needed=2, volume_needed=20, subgroups=['upper', 'lower', 'inner'])

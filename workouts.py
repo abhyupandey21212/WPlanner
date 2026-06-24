@@ -186,8 +186,8 @@ class Workout:
         return res
     
     def load_dataDB(self, workout_db):
-        move_dic = {move.name: move for move in self.movement_list}
         """Load most recent workout results"""
+        move_dic = {move.name: move for move in self.movement_list}
         try:
             workout_history = dict(workout_db[self.name_].find_one())
         except:
@@ -221,7 +221,52 @@ class Workout:
             move.do(sets)
    
 
+#------------ WORKOUTS ------------
 
+Push_I_blocks = [
+    {cable_incline_press: 4, tricep_extension: 3},
+    {lateral_raise: 3},
+    {seated_press: 4, chest_fly: 3},
+    {tricep_kickback: 3, cable_crunch: 3},
+    {calf_raise: 3},
+]
+
+Push_II_blocks = [
+    {incline_chest_press: 4, dips: 3},
+    {lateral_raise: 3, tricep_extension: 3},
+    {pec_deck: 3, rev_pec_deck: 3},
+    {machine_shoulder_press: 4, leg_curl: 3},
+]
+
+Pull_I_blocks = [
+    {baysean_cable_curl: 4},
+    {incline_curl: 4, close_grip_pulldown: 3},
+    {deadlift: 3, forearm_curl: 3},
+    {machine_row: 4, leg_extension: 3},
+]
+
+Pull_II_blocks = [
+    {lat_pull_up: 3, rear_delt_crossover: 3},
+    {t_bar_row: 3, shrugs: 3},
+    {preacher_curl: 3},
+    {cable_row: 3},
+    {zotmann_preacher_curl: 3},
+]
+
+Legs_I_blocks = [
+    {squat: 4},
+    {rdl: 3},
+    {machine_calf_raise: 4, leg_extension: 3},
+    {leg_curl: 3},
+    {smith_lunge: 3},
+]
+
+debugging_workout = [
+    {dummy1:4},
+    {dummy2:3},
+]
+
+#------------ OLD VERSIONS ------------
 Push_I_blocksv3 = [
     {cable_chest_press: 4, rear_lateral_raise: 3},
     {chest_fly: 3, upright_row: 3},
@@ -255,8 +300,6 @@ Legs_I_blocksv2 = [
     {leg_extension: 3, one_leg_machine_calf_raise: 3},
     {leg_curl: 3}
 ]
-
-#------------ OLD VERSIONS ------------
 Pull_Iv2_blocks = [
     {incline_curl: 4, lat_pull_up: 3},
     {hammer_curl: 4, rear_delt_crossover: 3},
@@ -289,11 +332,12 @@ Push_I_blocksv2 = [
 ]
 
 #------------ Selected VERSIONS ------------
-Push_I = Workout("Push I", Push_I_blocksv3)
-Push_II = Workout("Push II", Push_II_blocksv4)
-Pull_I = Workout("Pull I", Pull_Iv3_blocks)
-Pull_II = Workout("Pull II", Pull_IIv2_blocks)
-Legs_I = Workout("Legs I", Legs_I_blocksv2)
+Push_I = Workout("Push I", Push_I_blocks)
+Push_II = Workout("Push II", Push_II_blocks)
+Pull_I = Workout("Pull I", Pull_I_blocks)
+Pull_II = Workout("Pull II", Pull_II_blocks)
+Legs_I = Workout("Legs I", Legs_I_blocks)
+Dummy_I = Workout("_Debugging", debugging_workout)
 
 #Removing old unused workouts to reduce clutter
 #Push_II = Workout("Push II", Push_II_blocks)
@@ -302,7 +346,7 @@ Legs_I = Workout("Legs I", Legs_I_blocksv2)
 #CB_I = Workout("Chest and Back I", CB_I_blocks)
 
 
-My_body = Body([chest, front_delt, side_delt, rear_delt, tricep, back, bicep, forearm, quad, hamstring, abductor, aductor, glute, calf], [],[Push_I, Push_II, Pull_I, Pull_II, Legs_I])
+My_body = Body([chest, front_delt, side_delt, rear_delt, tricep, back, bicep, forearm, quad, hamstring, abductor, aductor, glute, calf], [],[Push_I, Push_II, Pull_I, Pull_II, Legs_I, Dummy_I])
 
 
 """

@@ -82,9 +82,7 @@ if page == "Workout":
 
     # Extract last week's block notes if they exist
     last_block_notes = {}
-    print(last_data.keys())
     if last_data is not None and "__block_notes__" in last_data:
-        print('FOUND NOTES!')
         last_block_notes = last_data["__block_notes__"]
 
     st.subheader(f"Workout: {workout.name}")
@@ -150,13 +148,21 @@ if page == "Workout":
                 all_sets.append([move]*n_sets)
             smaller = min(set_lengths)
             ordered_set = {i: [move for move in block] for i in range(smaller)}
+            
             while max(ordered_set) < max(set_lengths)-1:
                 ordered_set[max(ordered_set) + 1] = [all_sets[0][0]]            
 
             #Filling from autosave
             for move, n_sets in block.items():
-                if move.name not in st.session_state.workout_progress:  
-                    st.session_state.workout_progress[move.name] = [{"weight": 0.0, "reps": 0} for i in range(n_sets)]
+                if move.name not in st.session_state.workout_progress:
+                    if move.uni:
+                        st.session_state.workout_progress[move.name] = [
+                            {"weight": (0.0, 0.0), "reps": (0, 0)} for i in range(n_sets)
+                        ]
+                    else:
+                        st.session_state.workout_progress[move.name] = [
+                            {"weight": 0.0, "reps": 0} for i in range(n_sets)
+                        ]
 
 
                 #st.markdown(f"Set {s+1}")
@@ -165,52 +171,102 @@ if page == "Workout":
             for s, subset in ordered_set.items():
                     #st.markdown(f"Set {s+1}")
                 sets = []   
-
                 for move in subset:
                     if last_data is None:
                         last = None
                     else:
                         last = last_data.get(move.name, [])
-                    cols = st.columns(5)
-                    cols[0].write(f"Set {s+1}")
-                    cols[1].write(f"**{move.name}**")
-                    if last is None:
-                        last_w = '-'
-                        last_r = '-'
-                    else:
-                        #print('found prev values')
-                        #print(last)
-                        last_w = last[s]["weight"] if s < len(last) else "-"
-                        last_r = last[s]["reps"] if s < len(last) else "-"
-                                            
-                    # Prefill from autosave if available
-                    prev = st.session_state.workout_progress.get(move.name, [])
-                    #print(prev)
-                    prev_w = prev[s]["weight"] if s < len(prev) else 0.0
-                    prev_r = prev[s]["reps"] if s < len(prev) else 0
-                    
-                    w = cols[2].number_input(
-                        f"Weight {move.name} set{s}",
-                        value=float(prev_w),
-                        label_visibility="collapsed"
-                    )
-                    r = cols[3].number_input(
-                        f"Reps {move.name} set{s}",
-                        value=int(prev_r),
-                        label_visibility="collapsed"
-                    )
-                    cols[4].write(f"Last: {last_w}kg × {last_r}")
-                    #st.write("---")
+                    if not move.uni:
+                        cols = st.columns(5)
+                        cols[0].write(f"Set {s+1}")
+                        cols[1].write(f"**{move.name}**")
+                        if last is None:
+                            last_w = '-'
+                            last_r = '-'
+                        else:
+                            last_w = last[s]["weight"] if s < len(last) else "-"
+                            last_r = last[s]["reps"] if s < len(last) else "-"
 
-                    
-                    sets.append({"weight": w, "reps": r})
-                    try:
-                        results[move].append({"weight": w, "reps": r})
-                    except:
-                        results[move] = [{"weight": w, "reps": r}]
-                    
-                    #Autosave
-                    st.session_state.workout_progress[move.name][s] = {"weight": w, "reps": r}
+                        prev = st.session_state.workout_progress.get(move.name, [])
+                        prev_w = prev[s]["weight"] if s < len(prev) else 0.0
+                        prev_r = prev[s]["reps"] if s < len(prev) else 0
+
+                        w = cols[2].number_input(
+                            f"Weight {move.name} set{s}",
+                            value=float(prev_w),
+                            label_visibility="collapsed"
+                        )
+                        r = cols[3].number_input(
+                            f"Reps {move.name} set{s}",
+                            value=int(prev_r),
+                            label_visibility="collapsed"
+                        )
+                        cols[4].write(f"Last: {last_w}kg × {last_r}")
+
+                        sets.append({"weight": w, "reps": r})
+                        try:
+                            results[move].append({"weight": w, "reps": r})
+                        except:
+                            results[move] = [{"weight": w, "reps": r}]
+                        st.session_state.workout_progress[move.name][s] = {"weight": w, "reps": r}
+
+                    else:
+                        # --- Unilateral move: render Left and Right rows, save as tuples ---
+                        prev = st.session_state.workout_progress.get(move.name, [])
+                        if s < len(prev) and isinstance(prev[s]["weight"], (tuple, list)):
+                            prev_wL, prev_wR = prev[s]["weight"]
+                            prev_rL, prev_rR = prev[s]["reps"]
+                        else:
+                            prev_wL, prev_wR = 0.0, 0.0
+                            prev_rL, prev_rR = 0, 0
+
+                        if last is None:
+                            last_wL = last_wR = last_rL = last_rR = '-'
+                        else:
+                            last_set = last[s] if s < len(last) else None
+                            if last_set is not None and isinstance(last_set.get("weight"), (tuple, list)):
+                                last_wL, last_wR = last_set["weight"]
+                                last_rL, last_rR = last_set["reps"]
+                            else:
+                                last_wL = last_wR = last_rL = last_rR = '-'
+
+                        side_data = [
+                            ("L", prev_wL, prev_rL, last_wL, last_rL),
+                            ("R", prev_wR, prev_rR, last_wR, last_rR),
+                        ]
+                        side_results = {}
+
+                        for side, prev_w, prev_r, last_w, last_r in side_data:
+                            cols = st.columns(5)
+                            cols[0].write(f"Set {s+1}")
+                            cols[1].write(f"**{move.name} ({side})**")
+
+                            w_val = cols[2].number_input(
+                                f"Weight {move.name} set{s} {side}",
+                                value=float(prev_w),
+                                label_visibility="collapsed",
+                                key=f"weight_{move.name}_{s}_{side}"
+                            )
+                            r_val = cols[3].number_input(
+                                f"Reps {move.name} set{s} {side}",
+                                value=int(prev_r),
+                                label_visibility="collapsed",
+                                key=f"reps_{move.name}_{s}_{side}"
+                            )
+                            cols[4].write(f"Last: {last_w}kg × {last_r}")
+
+                            side_results[side] = (w_val, r_val)
+
+                        wL, rL = side_results["L"]
+                        wR, rR = side_results["R"]
+
+                        sets.append({"weight": (wL, wR), "reps": (rL, rR)})
+                        try:
+                            results[move].append({"weight": (wL, wR), "reps": (rL, rR)})
+                        except:
+                            results[move] = [{"weight": (wL, wR), "reps": (rL, rR)}]
+                        #Autosave
+                        st.session_state.workout_progress[move.name][s] = {"weight": (wL, wR), "reps": (rL, rR)}
 
             # Block notes field — shown after all sets in the block
             note_key = f"block_{block_idx}"
