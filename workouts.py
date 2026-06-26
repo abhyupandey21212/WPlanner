@@ -305,7 +305,7 @@ Pull_Iv2_blocks = [
     {hammer_curl: 4, rear_delt_crossover: 3},
     {t_bar_row: 4, shrugs: 3},
 ]
-Pull_II_blocks = [
+Pull_II_blocksv2 = [
     {lat_pullaround: 3, bent_over_row: 3},
     {deadlift: 3, reverse_fly: 3},
     {incline_curl: 3},
